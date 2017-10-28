@@ -46,7 +46,6 @@ body{
 
 div.tab {
     overflow: hidden;
-    size: 33%;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
 }
@@ -69,7 +68,7 @@ div.tab button:hover {
 
 /* Create an active/current tablink class */
 div.tab button.active {
-    background-color: rgb(255, 173, 79);
+    background-color: rgb(255, 149, 28);
 }
 
 /* Style the tab content */
