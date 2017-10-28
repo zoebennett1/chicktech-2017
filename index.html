@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <!-- This is where we load JavaScript files that we need - here I'm loading phaser and bootstrap (a bunch of helpful classes
+    to make your websites look more modern and fancy!)-->
+    <meta charset="UTF-8" />
+    <title>ChickTech JavaScript</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!--loading our CSS file-->
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+
+</head>
+
+<body>
+<h1> <b> I'm Zoe!</b></h1>
+
+
+<!--Build your about me page here!-->
+
+
+
+
+    <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'School')">School</button>
+            <button class="tablinks" onclick="openTab(event, 'Family')">Family</button>
+            <button class="tablinks" onclick="openTab(event, 'FunFacts')">Fun Facts</button>
+          </div>
+          
+          <div id="School" class="tabcontent">
+            <h3>School</h3>
+            <p>In school, I am the vice president of Key Club, President of Amateur Bowlers Alliance, ASB Director of Communications, and am in Mock Trial, Model UN, National Honor Society, and am on the Improv Team!</p>
+            <img src = "https://www.pps.net/cms/lib/OR01913224/Centricity/Domain/213/High%20School%20Logos/Wilson-Crest-Color.png" height="250" width="250"/>
+          </div>
+          
+          <div id="Family" class="tabcontent">
+            <h3>Family</h3>
+            <p>I have two parents, Wendy and Tim.  They are both lawyers.  My sister is a freshman at OSU, she studies computer and electrical engineering </p>
+            <img src = "IMG_2420.JPG" height="300" width="300"/>
+            
+        </div>
+          
+          <div id="FunFacts" class="tabcontent">
+            <h3>Fun Fatcs</h3>
+           
+
+    <ul>
+                <li> I love ice cream and could live off of chocolate</li> 
+                <li>I might go to Costa Rica this summer!</li>
+                <li>I live a sad, dogless life, but I love dogs! </li>
+                <li>I love road trips and travelling</li>
+                <li> Last summer I went to France, Italy, Spain, Iceland, and Norway! </li>
+                <li> I love being with kids, and am a camp counselor every summer</li>
+                <li>I do theater</li> 
+                <li> I have a 1998 Subaru Outback and it is my pride and joy (even though it has some troubles getting up hills occasionally) </li>
+                <li> I am an outdoor school student leader </li>
+                <li> I appreciate puns, and people who are very passionate about very specific things</li>
+                <li> I speak Spanish (more or less)</li>
+                <li> I love color coordination!!</li>
+                <li> I am the Direcot of Communications at my school and d o things like run all of our social media</li> 
+                <li>Some of my favorite shows are Nathan for You, Friday Night Lights, and Veronica Mars </li>                        
+              </ul>   
+              <img src = "IMG_4909.JPG" height="250" width="250"/>
+              <img src = "IMG_4576.jpg" height="250" width="250"/>
+              <img src = "http://www.cartrucktrader.com/images.aspx/id-501506506/1998-subaru-outback-506-p1.jpg" height="250" width="250"/>
+              <img src = "http://www.slate.com/content/dam/slate/articles/technology/future_tense/2016/05/160503_FT_cybersecurity-airplanes.jpg.CROP.promo-xlarge2.jpg" height="250" width="250"/>
+              
+            </div> 
+
+</body>
+</html>
+
+<!--END HTML FOR ABOUT ME PAGE-->
+
+<!--Put any javascript here-->
+<script type="text/javascript">
+
+    //this opens a new window when you click the button with our game html! Since an entire URL is not specified,
+    //it opens relative to your current path - if you are on www.mywebsite.com/index.html, this would go to
+    //www.mywebsite.com/game.html
+    var onClick = function() {
+      window.open('/game.html');
+    };
+
+    function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+} 
+</script>
+
