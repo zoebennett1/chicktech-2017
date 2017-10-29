@@ -14,17 +14,27 @@
 <script type="text/javascript">
 
     var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    var score=0;
+    var lives=3;
+    var livesText;
+    var scoreText;
 
     //These three functions are required for phaser!
     //Preload loads everything your game needs - sprites, images, etc
     function preload() {
-        game.load.image('sky', 'assets/sky.png');
-        game.load.image('ground', 'assets/platform.png');
-        game.load.spritesheet('farmer', 'assets/farmer1.png', 117.5, 156.5);
+        game.load.image('sky', 'assets/sky6.jpg');
+        game.load.image('ground', 'assets/platform1.png');
+        game.load.image('drop', 'assets/drop1.png');
+        game.load.image('chicken', 'assets/chicken1.png');
+        game.load.image('almonds', 'assets/almonds(1).png');
+        game.load.image('broccoli', 'assets/broccoli.png');
+        game.load.image('tea', 'assets/tea.png');
+        game.load.spritesheet('farmer', 'assets/person.png', 57, 99);
     }
 
     //Create sets up your game for you - most of your code will probably be here!
     function create() {
+
 
         //add the sky
         game.add.sprite(0, 0, 'sky');
@@ -54,23 +64,64 @@
         //give player gravity
         player.body.gravity.y = 300;
 
-        player.animations.add('left', [8, 9, 10, 11], 10, true);
-        player.animations.add('right', [16, 17, 18,19], 10, true);
+        player.animations.add('left', [6,5,,4,3,2,1], 10, true);
+        player.animations.add('right', [8,9,10,11,12], 10, true);
 
-
-        //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
 
-    }
+
+
+        //     //  Here we'll create 12 of them evenly spaced apart
+        //     for (var i = 0; i < 12; i++)
+        // {
+        //     //  Create a star inside of the 'rain' group
+        //     var drop = rain.create(i * 70, 0, 'drop');
+
+        //             //  Let gravity do its thing
+        //             drop.body.gravity.y = 6;
+        //             var score = 0;
+
+        //     //  This just gives each star a slightly random bounce value
+        //     drop.body.bounce.y = 0.7 + Math.random() * 0.2;
+        // }
+
+        rain = game.add.group();
+        rain.enableBody = true;
+        evils = game.add.group();
+        evils.enableBody = true;
+        brocs = game.add.group();
+        brocs.enableBody = true;
+        alms = game.add.group();
+        alms.enableBody = true;
+        te = game.add.group();
+        te.enableBody = true;
+
+
+
+        scoreText = game.add.text(16, 16, 'Conservation Score: 0', {fontSize: '32px', fill: '#1500ff' });
+       // livesText = game.add.text(16, 16, '\nLives Remaining: 3', {fontSize: '32px', fill: '#1500ff' });
+
+        timer = game.time.create();
+        timer.start();
+        timer.loop(5000,createRain);
+        timer.loop(700, createEvils)
+        timer.loop(700, createBrocs)
+        timer.loop(1500, createAlms)
+        timer.loop(700, createTe)
+
+
+        
+
+    }   
+
 
     //Update is continously called while the game is being played - add things like
     //tracking arrow keys, etc here!
     function update() {
 
-    //check if player is touching the platform - stops from falling through ground
-    game.physics.arcade.collide(player, platforms);
-
-      //  Reset the players velocity (movement)
+          //  Reset the players velocity (movement)
+          //  Collide the player and the stars with the platforms
+        var hitPlatform = game.physics.arcade.collide(player, platforms);
       player.body.velocity.x = 0;
 
         //left key control
@@ -78,7 +129,6 @@
         {
             //  Move to the left
             player.body.velocity.x = -200;
-
             player.animations.play('left');
         }
         //right key control
@@ -86,24 +136,132 @@
         {
             //  Move to the right
             player.body.velocity.x = 200;
-
             player.animations.play('right');
         }
-        //no keys pressed
+
         else
         {
             //  Stand still
             player.animations.stop();
-
             player.frame = 0;
         }
+    //         //  Allow the player to jump if they are touching the ground.
+    // if (cursors.up.isDown && player.body.touching.down && hitPlatform)
+    // {
+    //     player.body.velocity.y = -350;
+    // }
+
+   // game.physics.arcade.collide(rain, platforms);
+    game.physics.arcade.overlap(player, rain, collectDrop, null, this);
+   // game.physics.arcade.collide(rain, platforms);
+    game.physics.arcade.overlap(player, evils, collectChicken, null, this);
+
+    game.physics.arcade.overlap(player, brocs, collectBroccoli, null, this);
+    
+    game.physics.arcade.overlap(player, alms, collectAlmonds, null, this);
+
+    game.physics.arcade.overlap(player, te, collectTea, null, this);
+
 
     }
 
-    //add any extra functions you need here! 
+
+    function collectDrop(player, drop) {
+    // Removes the star from the screen
+    drop.kill();
+    score += 10;
+    scoreText.text = 'Conservation Score: '+ score;
+    }
+
+    function collectBroccoli(player, brocolli){
+        brocolli.kill();
+        score+=4;
+        scoreText.text = 'Conservation Score: '+ score;
+    }
+
+
+
+    function collectChicken(player, chicken) {
+    chicken.kill();
+    score -= 7;
+    scoreText.text = 'Conservation Score: '+ score;
+    // lives-=1;
+    // livesText.text = '\nLives Remaining: '+lives;
+    }
+
+    function collectAlmonds(player, almonds) {
+    almonds.kill();
+    score -= 5;
+    scoreText.text = 'Conservation Score: '+ score;
+    // lives-=1;
+    // livesText.text = '\nLives Remaining: '+lives;
+    }
+
+
+    function collectTea(player, tea){
+        tea.kill();
+        score+=4;
+        scoreText.text = 'Conservation Score: '+ score;
+    }
+
+
+function createRain(){
+            //  Create a star inside of the 'rain' group
+            var xPos = Math.random()*800;
+            var drop = rain.create(xPos, 0,'drop');
+
+                    //  Let gravity do its thing
+                    drop.body.gravity.y = 8;
+
+            //  This just gives each star a slightly random bounce value
+            drop.body.bounce.y = 0.7 + Math.random() * 0.2;
+        }
+        function createEvils(){
+            //  Create a star inside of the 'rain' group
+            var xPos = Math.random()*800;
+            var chicken = evils.create(xPos, 0,'chicken');
+
+                    //  Let gravity do its thing
+                    chicken.body.gravity.y = 8;
+
+            //  This just gives each star a slightly random bounce value
+            chicken.body.bounce.y = 0.7 + Math.random() * 0.2;
+        }
+        function createBrocs(){
+            //  Create a star inside of the 'rain' group
+            var xPos = Math.random()*800;
+            var broccoli = brocs.create(xPos, 0,'broccoli');
+
+                    //  Let gravity do its thing
+                    broccoli.body.gravity.y = 8;
+
+            //  This just gives each star a slightly random bounce value
+            broccoli.body.bounce.y = 0.7 + Math.random() * 0.2;
+        }
+        function createAlms(){
+            //  Create a star inside of the 'rain' group
+            var xPos = Math.random()*800;
+            var almonds = alms.create(xPos, 0,'almonds');
+
+                    //  Let gravity do its thing
+                    almonds.body.gravity.y = 8;
+
+            //  This just gives each star a slightly random bounce value
+            almonds.body.bounce.y = 0.7 + Math.random() * 0.2;
+        }
+        function createTe(){
+            //  Create a star inside of the 'rain' group
+            var xPos = Math.random()*800;
+            var tea = te.create(xPos, 0,'tea');
+
+                    //  Let gravity do its thing
+                    tea.body.gravity.y = 8;
+
+            //  This just gives each star a slightly random bounce value
+            tea.body.bounce.y = 0.7 + Math.random() * 0.2;
+        }
 
 
 </script>
-
 </body>
 </html>
