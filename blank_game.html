@@ -18,6 +18,7 @@
     var lives=3;
     var livesText;
     var scoreText;
+    var introText;
 
     //These three functions are required for phaser!
     //Preload loads everything your game needs - sprites, images, etc
@@ -96,10 +97,10 @@
         te = game.add.group();
         te.enableBody = true;
 
-
-
         scoreText = game.add.text(16, 16, 'Conservation Score: 0', {fontSize: '32px', fill: '#1500ff' });
+       introText = game.add.text(16, 16, '\n\nAvoid the Foods that take lots of water to produce!  Collect raindrops for bonus points', {fontSize: '15px', fill: '##000' });
        // livesText = game.add.text(16, 16, '\nLives Remaining: 3', {fontSize: '32px', fill: '#1500ff' });
+
 
         timer = game.time.create();
         timer.start();
@@ -107,7 +108,7 @@
         timer.loop(700, createEvils)
         timer.loop(700, createBrocs)
         timer.loop(1500, createAlms)
-        timer.loop(700, createTe)
+        timer.loop(600, createTe)
 
 
         
@@ -169,13 +170,13 @@
     function collectDrop(player, drop) {
     // Removes the star from the screen
     drop.kill();
-    score += 10;
+    score += 7;
     scoreText.text = 'Conservation Score: '+ score;
     }
 
     function collectBroccoli(player, brocolli){
         brocolli.kill();
-        score+=4;
+        score+=3;
         scoreText.text = 'Conservation Score: '+ score;
     }
 
@@ -183,7 +184,7 @@
 
     function collectChicken(player, chicken) {
     chicken.kill();
-    score -= 7;
+    score -= 10;
     scoreText.text = 'Conservation Score: '+ score;
     // lives-=1;
     // livesText.text = '\nLives Remaining: '+lives;
@@ -191,7 +192,7 @@
 
     function collectAlmonds(player, almonds) {
     almonds.kill();
-    score -= 5;
+    score -= 4;
     scoreText.text = 'Conservation Score: '+ score;
     // lives-=1;
     // livesText.text = '\nLives Remaining: '+lives;
@@ -200,7 +201,7 @@
 
     function collectTea(player, tea){
         tea.kill();
-        score+=4;
+        score+=3;
         scoreText.text = 'Conservation Score: '+ score;
     }
 
